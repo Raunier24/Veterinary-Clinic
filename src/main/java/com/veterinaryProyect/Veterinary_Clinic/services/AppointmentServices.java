@@ -1,5 +1,6 @@
 package com.veterinaryProyect.Veterinary_Clinic.services;
 
+
 import com.veterinaryProyect.Veterinary_Clinic.models.Appointment;
 import com.veterinaryProyect.Veterinary_Clinic.repositories.IAppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,20 +10,26 @@ import java.util.List;
 
 @Service
 public class AppointmentServices {
-
     @Autowired
-    IAppointmentRepository iAppointmentRepository;
+    private IAppointmentRepository appointmentRepository;
 
-    public List<Appointment> getAllAppointment() {
-        return (List<Appointment>) iAppointmentRepository.findAll();
+    public List<Appointment> getAllAppointments() {
+        return appointmentRepository.findAll();
     }
 
-    public Appointment getById(Long id) {
-        Appointment appointment;
-        appointment = iAppointmentRepository.findById(id).orElseThrow();
-        return appointment;
-
+    public Appointment getAppointmentById(Long id) {
+        return appointmentRepository.findById(id).orElse(null);
     }
 
-    public void deleteAppoinment(long id) {iAppointmentRepository.deleteById(id); }
+    public Appointment addAppointment(Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
+
+    public Appointment updateAppointment(Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
+
+    public void deleteAppointment(Long id) {
+        appointmentRepository.deleteById(id);
+    }
 }

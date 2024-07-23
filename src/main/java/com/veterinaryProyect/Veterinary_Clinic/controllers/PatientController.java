@@ -4,30 +4,44 @@ package com.veterinaryProyect.Veterinary_Clinic.controllers;
 import com.veterinaryProyect.Veterinary_Clinic.models.Patient;
 import com.veterinaryProyect.Veterinary_Clinic.services.PatientServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.management.InstanceNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/patients")
 public class PatientController {
-
     @Autowired
-    PatientServices patientServices;
+    private PatientServices patientServices;
 
     @GetMapping
-    public List<Patient> getAllPatient() {
-        return patientServices.getAllPatient();
+    public List<Patient> getAllPatients() {
+        return patientServices.getAllPatients();
     }
 
-    @GetMapping(path = "/images/{id}")
-    public Patient getPatientById(@PathVariable("id") Long id) {
-        return patientServices.getById(id);
+    @GetMapping("/{id}")
+    public Patient getPatientById(@PathVariable Long id) {
+        return patientServices.getPatientById(id);
     }
 
+    @PostMapping
+    public Patient addPatient(@RequestBody Patient patient) {
+        return patientServices.addPatient(patient);
+    }
+
+    @PutMapping("/{id}")
+    public Patient updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
+        patient.setId(id);
+        return patientServices.updatePatient(patient);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePatient(@PathVariable Long id) {
+        patientServices.deletePatient(id);
+    }
+
+    @GetMapping("/identification/{identificationNumber}")
+    public Patient getPatientByIdentificationNumber(@PathVariable String identificationNumber) {
+        return patientServices.getPatientByIdentificationNumber(identificationNumber);
+    }
 }

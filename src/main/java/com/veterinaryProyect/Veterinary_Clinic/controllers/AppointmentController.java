@@ -9,25 +9,34 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/appointments")
 public class AppointmentController {
-
     @Autowired
-    AppointmentServices appointmentServices;
+    private AppointmentServices appointmentServices;
 
-    public List<Appointment> getAllAppointment() {
-        return appointmentServices.getAllAppointment();
+    @GetMapping
+    public List<Appointment> getAllAppointments() {
+        return appointmentServices.getAllAppointments();
     }
 
-    @GetMapping(path = "/*/{id}")
-    public Appointment getAppointmentById(@PathVariable("id") Long id) {
-        return appointmentServices.getById(id);
+    @GetMapping("/{id}")
+    public Appointment getAppointmentById(@PathVariable Long id) {
+        return appointmentServices.getAppointmentById(id);
     }
 
-    @DeleteMapping(path = "/*/{id}")
-    public void deleteAppointmentById(@PathVariable("id") Long id) {
-        appointmentServices.deleteAppoinment(id);
-
+    @PostMapping
+    public Appointment addAppointment(@RequestBody Appointment appointment) {
+        return appointmentServices.addAppointment(appointment);
     }
 
+    @PutMapping("/{id}")
+    public Appointment updateAppointment(@PathVariable Long id, @RequestBody Appointment appointment) {
+        appointment.setId(id);
+        return appointmentServices.updateAppointment(appointment);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAppointment(@PathVariable Long id) {
+        appointmentServices.deleteAppointment(id);
+    }
 }

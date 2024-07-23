@@ -1,26 +1,39 @@
 package com.veterinaryProyect.Veterinary_Clinic.services;
 
+
 import com.veterinaryProyect.Veterinary_Clinic.models.Patient;
 import com.veterinaryProyect.Veterinary_Clinic.repositories.IPatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class PatientServices {
-
     @Autowired
-    IPatientRepository iPatientRepository;
+    private IPatientRepository patientRepository;
 
-    public List<Patient> getAllPatient() {
-        return (List<Patient>) iPatientRepository.findAll();
+    public List<Patient> getAllPatients() {
+        return patientRepository.findAll();
     }
 
-    public Patient getById(Long id) {
-        Patient patient;
-        patient = iPatientRepository.findById(id).orElseThrow();
-        return patient;
+    public Patient getPatientById(Long id) {
+        return patientRepository.findById(id).orElse(null);
+    }
 
+    public Patient addPatient(Patient patient) {
+        return patientRepository.save(patient);
+    }
+
+    public Patient updatePatient(Patient patient) {
+        return patientRepository.save(patient);
+    }
+
+    public void deletePatient(Long id) {
+        patientRepository.deleteById(id);
+    }
+
+    public Patient getPatientByIdentificationNumber(String identificationNumber) {
+        return patientRepository.findByIdentificationNumber(identificationNumber);
     }
 }
-
