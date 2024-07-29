@@ -21,6 +21,10 @@ public class Patient {
     private String ownerFirstName;
     private String ownerLastName;
     private String ownerPhoneNumber;
+    public void setId(Long id2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setId'");
+    }
 
     //@ManyToMany
     //@JoinTable(
